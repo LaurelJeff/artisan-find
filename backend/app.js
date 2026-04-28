@@ -16,8 +16,10 @@ app.use(express.json());
 
 app.get('/api', (req, res) => {
     res.status(200)
-        .json({ message: 'Welcome to Artisan Find API' });
-    createUser('John Doe', 'john@example.com', 'password123');
+        .json({ message: 'Welcome to Artisan Find API' ,
+            prisma: prisma.user.findMany()
+        });
+    createUser('John Doe', 'see@example.com', 'password123');
 });
 
 app.listen(PORT, () => {

@@ -30,26 +30,12 @@ export async function createUser(name, email, password) {
  * `Finds a user by their email address
  * @param {email} email 
  * @returns void
-    } catch (error) {
-        console.error("Error creating user:", error);
-        throw error;
-    }
 };
 
 /**
  * `Finds a user by their email address
  * @param {email} email 
  * @returns void
- */
-export async function getUserByEmail(email) {
-    return prisma.user.findUnique({
-        where: { email },
-    });
-};
-
-/**
- * Finds a user by their ID
- * @param {id} id 
  */
 export async function getUserByEmail(email) {
     return prisma.user.findUnique({
