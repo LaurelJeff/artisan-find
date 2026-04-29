@@ -30,12 +30,6 @@ export async function createUser(name, email, password) {
  * `Finds a user by their email address
  * @param {email} email 
  * @returns void
-};
-
-/**
- * `Finds a user by their email address
- * @param {email} email 
- * @returns void
  */
 export async function getUserByEmail(email) {
     return prisma.user.findUnique({
@@ -61,3 +55,11 @@ export async function getUserById(id) {
 export async function getAllUsers() {
     return prisma.user.findMany();
 };
+
+export async function deleteUser(id) {
+    return prisma.user.delete(
+        {
+            where: { id }
+        }
+    );
+}
