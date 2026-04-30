@@ -1,0 +1,144 @@
+/* RESET */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background: #f8f9fa;
+}
+.container{
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.star {
+  color: gray;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.star.active {
+  color: gold; /* yellow */
+}
+
+/* ===== REVIEWS SECTION ===== */
+
+.testimonals {
+  text-align: center;
+  margin: 80px 0;
+}
+
+.testimonals h4 {
+  color: gray;
+  margin-bottom: 10px;
+}
+
+.testimonals h1 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+/* input area */
+.add-review {
+  margin-bottom: 40px;
+}
+
+.add-review input {
+  padding: 10px 15px;
+  width: 250px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.add-review button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* reviews layout */
+.reviews {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* each card */
+.testimonial {
+  background: #f5f5f5;
+  padding: 30px;
+  border-radius: 20px;
+  width: 300px;
+  text-decoration: none;
+  color: black;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.testimonial:hover {
+  transform: translateY(-5px);
+}
+
+/* review text */
+.testimonial p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* profile section */
+.testimonial div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* profile image */
+.testimonial img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* name */
+.testimonial h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* optional info */
+.testimonial h4 {
+  font-size: 12px;
+  color: gray;
+  margin: 0;
+}

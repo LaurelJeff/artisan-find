@@ -1,0 +1,99 @@
+/* RESET */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background: #f8f9fa;
+}
+
+/* HEADER */
+.nav-header {
+  background: #f8f9fa;
+  width: 100%;
+}
+
+/* NAV BAR */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  width: 100%;
+}
+
+/* LOGO */
+.logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* NAV LINKS CENTERED */
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+/* LINKS */
+.nav-item {
+  text-decoration: none;
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* ACTIVE (Home color like your image) */
+.nav-item:first-child {
+  color: orange;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* SEARCH BOX */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #eee;
+  border-radius: 25px;
+  padding: 8px 15px;
+  width: 220px;
+}
+
+/* INPUT */
+.search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding-left: 30px;
+  font-size: 14px;
+}
+
+/* ICON */
+.search-icon {
+  position: absolute;
+  left: 10px;
+  color: gray;
+}
+
+/* PROFILE IMAGE (IMPORTANT CHANGE) */
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* NO RESULTS */
+.no-results {
+  color: red;
+  font-size: 12px;
+}

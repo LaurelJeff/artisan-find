@@ -1,0 +1,72 @@
+{
+  "steps": [
+    "Browse verified professionals near you",
+    "Schedule and pay securely online",
+    "Sit back while the job gets done"
+  ],
+
+  "chefs": [
+    {
+      "id": 1,
+      "name": "Chef Kim Geoseok",
+      "text": "Caterer",
+      "image": "/Images/breadstraw.jpeg",
+      "rating": 5
+    },
+    {
+      "id": 2,
+      "name": "Chef Anna Lee",
+      "text": "Caterer",
+      "image": "/Images/breadstraw.jpeg",
+      "rating": 4
+    }
+  ],
+
+  "services": [
+    {
+      "logo": "",
+      "title": "Quality Work",
+      "text": "We ensure top quality service"
+    },
+    {
+      "logo": "",
+      "title": "Quality Work",
+      "text": "We ensure top quality service"
+    },
+    {
+      "logo": "",
+      "title": "Quality Work",
+      "text": "We ensure top quality service"
+    },
+    {
+      "logo": "",
+      "title": "Quality Work",
+      "text": "We ensure top quality service"
+    }
+  ],
+
+  "reviews": [
+    {
+      "text": "Great service, very fast!",
+      "name": "Sarah M",
+      "profileImg": "https://randomuser.me/api/portraits/women/44.jpg",
+      "profileLink": "https://example.com/user/1",
+      "info": "Tailor- kano, Nigeria"
+    },
+    {
+      "text": "Super reliable and easy to use.",
+      "name": "John D",
+      "profileImg": "https://randomuser.me/api/portraits/men/32.jpg",
+      "profileLink": "https://example.com/user/2",
+      "info": "Tailor- kano, Nigeria"
+    },
+    {
+      "text": "Super reliable and easy to use.",
+      "name": "John D",
+      "profileImg": "https://randomuser.me/api/portraits/men/32.jpg",
+      "profileLink": "https://example.com/user/2",
+      "info": "Tailor- kano, Nigeria"
+    }
+  ]
+    
+}
