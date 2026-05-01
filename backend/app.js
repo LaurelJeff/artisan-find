@@ -6,6 +6,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { createUser, getUserById, getAllUsers, deleteUser } from './src/models/User.model.js';
+import authRoutes from './src/routes/home.js';
 
 dotenv.config();
 
@@ -15,6 +16,21 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configure session
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    name: process.env.SESSION_NAME,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        maxAge: process.env.SESSION_LIFETIME ? parseInt(process.env.SESSION_LIFETIME) : 24 * 60 * 60 * 1000 // 24 hours
+    }
+}));
+
+// Auth routes
+app.use('/api/auth', authRoutes);
 
 // base state inituialization
 app.get('/api', async (req, res) => {
