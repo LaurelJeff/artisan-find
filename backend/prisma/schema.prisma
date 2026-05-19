@@ -13,4 +13,47 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+
+  // Relations
+  artisan      Artisan?
+  jobListings  JobListing[]
+}
+
+model Artisan {
+  id          Int               @id @default(autoincrement())
+  userId      Int               @unique
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profession  String
+  createdAt   DateTime          @default(now())
+  
+  registrations JobRegistration[]
+}
+
+model JobListing {
+  id          Int               @id @default(autoincrement())
+  title       String
+  description String
+  location    String
+  jobType     String
+  salary      String?
+  status      String            @default("open")
+  createdAt   DateTime          @default(now())
+
+  employerId  Int
+  employer    User              @relation(fields: [employerId], references: [id], onDelete: Cascade)
+
+  registrations JobRegistration[]
+}
+
+model JobRegistration {
+  id          Int        @id @default(autoincrement())
+  jobId       Int
+  artisanId   Int
+  status      String     @default("registered") // "registered", "hired", "rejected"
+  createdAt   DateTime   @default(now())
+
+  job         JobListing @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  artisan     Artisan    @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, artisanId])
 }

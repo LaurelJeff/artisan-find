@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { createUser, getUserByEmail, getUserById } from '../models/User.model.js';
+import { upgradeUserToArtisan } from '../models/Artisan.model.js';
 
 /**
  * Register a new user
@@ -132,6 +133,41 @@ export async function getCurrentUser(req, res) {
         });
     } catch (error) {
         console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+/**
+ * Upgrade currently logged in user to an artisan
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ */
+export async function becomeArtisan(req, res) {
+    const { profession } = req.body;
+    try {
+        if (!profession) {
+            return res.status(400).json({ message: 'Profession is required' });
+        }
+
+        // Check if user is logged in
+        if (!req.userId) {
+            return res.status(401).json({ message: 'Unauthorized - Please log in' });
+        }
+
+        const artisan = await upgradeUserToArtisan(req.userId, profession);
+        res.status(200).json({
+            message: 'Upgraded to Artisan successfully',
+            artisan: {
+                id: artisan.id,
+                userId: artisan.userId,
+                profession: artisan.profession,
+            }
+        });
+    } catch (error) {
+        console.error('Error upgrading user to artisan:', error);
+        if (error.message === 'User is already registered as an artisan') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: 'Internal server error' });
     }
 }

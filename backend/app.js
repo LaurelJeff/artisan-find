@@ -6,7 +6,9 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { createUser, getUserById, getAllUsers, deleteUser } from './src/models/User.model.js';
-import authRoutes from './src/routes/home.js';
+import authRoutes from './src/routes/authroute.js';
+import artisanRoutes from './src/routes/artisan.js';
+import jobRoutes from './src/routes/jobs.js';
 
 dotenv.config();
 
@@ -31,6 +33,8 @@ app.use(session({
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+app.use('/api/artisans', artisanRoutes);
+app.use('/api/jobs', jobRoutes);
 
 // base state inituialization
 app.get('/api', async (req, res) => {
@@ -99,6 +103,23 @@ app.delete('/api/user/:id', async (req, res) => {
     } catch (error) {
         console.error('Error deleting user:', error);
         res.status(500).json({ message: 'Internal server error or user does not exist' });
+    }
+})
+
+// update user
+app.put('/api/user/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+    try {
+        const updatedUser = await updateUser(parseInt(id), name, email, password);
+        if (updatedUser) {
+            res.status(200).json(updatedUser);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 
