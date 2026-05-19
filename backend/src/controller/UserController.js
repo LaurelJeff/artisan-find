@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createUser, getUserByEmail, getUserById } from '../models/User.model.js';
+import { createUser, getUserByEmail, getUserById, getAllUsers, deleteUser, updateUser } from '../models/User.model.js';
 import { upgradeUserToArtisan } from '../models/Artisan.model.js';
 
 /**
@@ -168,6 +168,92 @@ export async function becomeArtisan(req, res) {
         if (error.message === 'User is already registered as an artisan') {
             return res.status(400).json({ message: error.message });
         }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+/**
+ * Get user by id
+ */
+export async function getUser(req, res) {
+    const { id } = req.params;
+    try {
+        const user = await getUserById(parseInt(id));
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+/**
+ * Create a new user
+ */
+export async function postUser(req, res) {
+    const { name, email, password } = req.body;
+    try {
+        const user = await createUser(name, email, password);
+        res.status(201).json(user);
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+/**
+ * Get all users
+ */
+export async function getUsers(req, res) {
+    try {
+        const users = await getAllUsers();
+        if (users.length > 0) {
+            res.status(200).json(users);
+        } else {
+            res.status(404).json({ message: 'no users avialable' })
+        }
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+/**
+ * Delete user by id
+ */
+export async function removeUser(req, res) {
+    const { id } = req.params;
+    try {
+        const deletedUser = await deleteUser(parseInt(id));
+        if (deletedUser) {
+            res.status(200).json({ message: 'User deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Internal server error or user does not exist' });
+    }
+}
+
+/**
+ * Update user
+ */
+export async function editUser(req, res) {
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+    try {
+        const updatedUser = await updateUser(parseInt(id), name, email, password);
+        if (updatedUser) {
+            res.status(200).json(updatedUser);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }

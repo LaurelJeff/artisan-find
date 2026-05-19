@@ -63,3 +63,16 @@ export async function deleteUser(id) {
         }
     );
 }
+
+export async function updateUser(id, name, email, password) {
+    const data = {};
+    if (name) data.name = name;
+    if (email) data.email = email;
+    if (password) {
+        data.password = await bcrypt.hash(password, 10);
+    }
+    return prisma.user.update({
+        where: { id: id },
+        data: data,
+    });
+}

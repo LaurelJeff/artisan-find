@@ -5,10 +5,10 @@ import bodyParser from 'body-parser';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-import { createUser, getUserById, getAllUsers, deleteUser } from './src/models/User.model.js';
 import authRoutes from './src/routes/authroute.js';
 import artisanRoutes from './src/routes/artisan.js';
 import jobRoutes from './src/routes/jobs.js';
+import userRoutes from './src/routes/user.js';
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ app.use(session({
     name: process.env.SESSION_NAME,
     resave: false,
     saveUninitialized: true,
-    cookie: { 
+    cookie: {
         secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
         maxAge: process.env.SESSION_LIFETIME ? parseInt(process.env.SESSION_LIFETIME) : 24 * 60 * 60 * 1000 // 24 hours
     }
@@ -35,6 +35,7 @@ app.use(session({
 app.use('/api/auth', authRoutes);
 app.use('/api/artisans', artisanRoutes);
 app.use('/api/jobs', jobRoutes);
+app.use('/api', userRoutes);
 
 // base state inituialization
 app.get('/api', async (req, res) => {
@@ -43,85 +44,6 @@ app.get('/api', async (req, res) => {
             message: 'Welcome to Artisan Find API',
         });
 });
-
-// get user by id
-app.get('/api/user/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const user = await getUserById(parseInt(id));
-        if (user) {
-            res.status(200).json(user);
-        } else {
-            res.status(404).json({ message: 'User not found' });
-        }
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
-// Create a new user
-app.post('/api/user', async (req, res) => {
-    const { name, email, password } = req.body;
-    try {
-        const user = await createUser(name, email, password);
-        res.status(201).json(user);
-    } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500)
-            .json({ message: 'Internal server error' });
-    }
-})
-
-// get all users
-app.get('/api/users', async (req, res) => {
-    try {
-        const users = await getAllUsers();
-        if (users.length > 0) {
-            res.status(200)
-                .json(users);
-        } else {
-            res.status(404)
-                .json({ message: 'no users avialable' })
-        }
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-})
-
-// delete user by id
-app.delete('/api/user/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deletedUser = await deleteUser(parseInt(id));
-        if (deletedUser) {
-            res.status(200).json({ message: 'User deleted successfully' });
-        } else {
-            res.status(404).json({ message: 'User not found' });
-        }
-    } catch (error) {
-        console.error('Error deleting user:', error);
-        res.status(500).json({ message: 'Internal server error or user does not exist' });
-    }
-})
-
-// update user
-app.put('/api/user/:id', async (req, res) => {
-    const { id } = req.params;
-    const { name, email, password } = req.body;
-    try {
-        const updatedUser = await updateUser(parseInt(id), name, email, password);
-        if (updatedUser) {
-            res.status(200).json(updatedUser);
-        } else {
-            res.status(404).json({ message: 'User not found' });
-        }
-    } catch (error) {
-        console.error('Error updating user:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
